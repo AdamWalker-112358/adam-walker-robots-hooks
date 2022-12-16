@@ -1,29 +1,20 @@
-import React from "react";
+import React, {useContext} from "react";
 import styled from "styled-components";
 import { Title } from "../styles/text.styled";
+import { GlobalContext } from "../context/globalContext";
 
-const Profile = ({
-  id,
-  first_name,
-  last_name,
-  email,
-  country,
-  description,
-  avatar
-}) => {
+const Profile = () => {
+  const { profile_data } = useContext(GlobalContext);
+  let { id, first_name, last_name, email, country, description, avatar } = profile_data;
   avatar = avatar.replace("100x100", "300x300");
 
   return (
     <Box>
-      <ImageBox>
-        <img src={avatar} alt="avatar" />
-      </ImageBox>
+      <ImageBox><img src={avatar} alt="avatar"/></ImageBox>
       <DetailsBox>
-        <Title>
-          {first_name} {last_name}
-        </Title>
-        <Line />
-        <Detail mt="2rem">id: {id}</Detail>
+        <Title>{first_name} {last_name}</Title>
+        <Line/>
+        <Detail>id: {id}</Detail>
         <Detail>country: {country}</Detail>
         <Detail>email: {email}</Detail>
         <Description>{description}</Description>

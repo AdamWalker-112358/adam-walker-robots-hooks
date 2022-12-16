@@ -1,35 +1,32 @@
-import React from "react";
+import React, { useContext} from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import {GlobalContext} from '../context/globalContext.js';
 
+let num_elements = 100;
 
-let num_elements = 0;
+const Filter = () => {
 
-const Filter = ({ list_data, on_filter }) => {
+  const { robots_list, update_list_state } = useContext(GlobalContext)
+  
   const update_list = (event) => {
     num_elements = 0;
     const txt = event.target.value;
-
-
-    // With function components we need to create a new copy of the list, because it keeps a closure to the original list and then we pass it back to the state. 
-    const filteredList = [...list_data]
+    const filteredList = [...robots_list]
 
     filteredList.forEach((item) => {
       item.show = item.first_name.toLowerCase().includes(txt.toLowerCase());
       if (item.show) num_elements++;
     });
 
-   
-
-    on_filter(filteredList);
+    update_list_state(filteredList);
   };
 
-  return (
-    <Header>
-      <Title>{num_elements || list_data.length} items filtered</Title>
-      <Input onChange={update_list} />
-    </Header>
-  );
+  
+  return <Header>
+            <Title>{num_elements ?? robots_list?.length } items filtered</Title>
+            <Input onChange={update_list} />
+          </Header>
 };
 
 Filter.propTypes = {

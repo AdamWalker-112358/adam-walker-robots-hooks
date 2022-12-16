@@ -1,24 +1,26 @@
-import React from "react";
+import React, {useContext} from "react";
 import Card from "./Card";
 import styled from "styled-components";
+import {GlobalContext} from '../context/globalContext.js';
 
-const List = ({ list_data, pick }) => {
-  console.log('Render')
-  console.log(list_data.filter(item => item.show))
+const List = () => {
+  const { robots_list, update_profile } = useContext(GlobalContext)
+
   return (
     <Box>
       <ul>
-        {list_data.map( (item) =>
-            item.show && (
-              <CardItem key={item.id} onClick={() => pick(item)}>
-                <Card {...item} />
-              </CardItem>
-            )
-        )}
+        {robots_list?.
+          map(item => item.show && 
+            <CardItem key={item.id} onClick={() => update_profile(item)}>
+              <Card {...item} />
+            </CardItem>
+          )
+        }
       </ul>
     </Box>
   );
 };
+
 export default List;
 
 const Box = styled.div`
